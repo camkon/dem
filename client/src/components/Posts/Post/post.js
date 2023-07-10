@@ -1,15 +1,20 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, IconButton, Skeleton, Typography } from "@mui/material"
 import moment from 'moment'
 import { Delete, MoreHoriz, ThumbUp } from '@mui/icons-material'
+import { useDispatch } from 'react-redux'
+import { deletePost, likePost } from "../../../actions/posts"
 
 const Post = ({data, setCurrentId}) => {
 
-    const deletePost = () => {}
+    const dispatch = useDispatch()
+
+    const deletePostHandler = () => { dispatch(deletePost(data._id)) }
+    const likePostHandler = () => { dispatch(likePost(data._id)) }
 
     return(
         <Card sx={{borderRadius: '0.5rem'}}>
             <Box sx={{position: 'relative'}}>
-                <img src={data?.selectedFile} alt={data?.title} style={{objectFit: 'contain', height: 'auto', width: '100%'}}/>
+                <img src={data?.selectedFile} alt={data?.title} style={{objectFit: 'cover', height: '12rem', width: '100%'}}/>
                 <Box sx={{position: 'absolute', top: 0, width: '100%', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', boxSizing: 'border-box', color: '#fff'}}>
                     <Box sx={{margin: '0.75rem 1rem'}}>
                         <Typography variant="h6" fontSize='1rem'>{data?.creator}</Typography>
@@ -30,8 +35,8 @@ const Post = ({data, setCurrentId}) => {
             </CardContent>
             
             <CardActions sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 1rem 0.75rem 1rem'}}>
-                <Button size="small" sx={{columnGap: '0.5rem'}}><ThumbUp fontSize="0.9rem"/>Like {data?.likeCount}</Button>
-                <Button onClick={deletePost} size="small" sx={{columnGap: '0.5rem'}}><Delete fontSize="0.9rem"/>Delete</Button>
+                <Button onClick={likePostHandler} size="small" sx={{columnGap: '0.5rem'}}><ThumbUp fontSize="0.9rem"/>Like {data?.likeCount}</Button>
+                <Button onClick={deletePostHandler} size="small" sx={{columnGap: '0.5rem'}}><Delete fontSize="0.9rem"/>Delete</Button>
             </CardActions>
         </Card>
     )
