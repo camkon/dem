@@ -4,7 +4,7 @@ import * as api from '../api'
 export const getPosts = () => async (dispatch) => {
     try {
         const {data} = await api.fetchPosts()
-        dispatch({type: 'FETCH_ALL', payload: data})
+        dispatch({type: 'READ', payload: data})
     } catch (error) {
         console.log(error?.message)
     }
@@ -25,6 +25,6 @@ export const updatePost = (id, post) => async (dispatch) => {
         dispatch({type: 'UPDATE', payload: data})
         dispatch(getPosts())
     } catch (error) {
-        console.log(error?.message)
+        console.log(error?.response?.data?.message)
     }
 }

@@ -4,6 +4,8 @@ import { Delete, MoreHoriz, ThumbUp } from '@mui/icons-material'
 
 const Post = ({data, setCurrentId}) => {
 
+    const deletePost = () => {}
+
     return(
         <Card sx={{borderRadius: '0.5rem'}}>
             <Box sx={{position: 'relative'}}>
@@ -29,7 +31,7 @@ const Post = ({data, setCurrentId}) => {
             
             <CardActions sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem 1rem 0.75rem 1rem'}}>
                 <Button size="small" sx={{columnGap: '0.5rem'}}><ThumbUp fontSize="0.9rem"/>Like {data?.likeCount}</Button>
-                <Button size="small" sx={{columnGap: '0.5rem'}}><Delete fontSize="0.9rem"/>Delete</Button>
+                <Button onClick={deletePost} size="small" sx={{columnGap: '0.5rem'}}><Delete fontSize="0.9rem"/>Delete</Button>
             </CardActions>
         </Card>
     )
