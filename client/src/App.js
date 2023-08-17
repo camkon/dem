@@ -1,39 +1,26 @@
-import { useEffect, useState } from 'react'
-import { AppBar, Container, Grid, Grow, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+import { Container } from '@mui/material'
 import './index.css'
 
-import { getPosts } from './actions/posts'
-import Posts from './components/Posts/posts'
-import Form from './components/Form/form'
+import Home from './components/Home/home'
+import Auth from './components/Auth/auth'
+import Layout from './components/Layout/layout'
 
 const App = () => {
-
-    const dispatch = useDispatch()
-    const [currentId, setCurrentId] = useState(null)
-
-    useEffect(() => {
-        dispatch(getPosts())
-    }, [])
-
     return(
-        <Container maxWidth="lg">
-            <AppBar position="static" sx={{padding: '0.5rem', borderRadius: '0.5rem', background: '#fff', margin: '1rem 0'}}>
-                <Typography color="primary" align='center'>SOCIAL MEDIA APP</Typography>
-            </AppBar>
-            <Grow in sx={{padding: {sx: 0, md: 0}}}>
-                <Container>
-                    <Grid container justifyContent="space-between" alignItems="stretch">
-                        <Grid item xs={12} sm={7}>
-                            <Posts setCurrentId={setCurrentId}/>
-                        </Grid>
-                        <Grid item xs={12} sm={4} sx={{marginTop: {xs: '1.5rem', md: 0}}}>
-                            <Form currentId={currentId} setCurrentId={setCurrentId}/>
-                        </Grid>
-                    </Grid>
+        <GoogleOAuthProvider clientId={'622946920465-qeni21jn7p07ipru9h6k0pnin5jd60u0.apps.googleusercontent.com'}>
+            <Router>
+                <Container maxWidth="lg">
+                    <Routes>
+                        <Route path='/' exact element={<Layout />}>
+                            <Route path='/' exact element={<Home />}/>
+                        </Route>
+                        <Route path='/auth' exact element={<Auth />}/>
+                    </Routes>
                 </Container>
-            </Grow>
-        </Container>
+            </Router>
+        </GoogleOAuthProvider>
     )
 }
 
