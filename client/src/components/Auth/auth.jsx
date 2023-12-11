@@ -1,5 +1,6 @@
 import { Avatar, Box, Button, Container, Divider, Grid, Link, Paper, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import Input from '../Mui/input'
 import {GoogleLogin} from '@react-oauth/google'
@@ -9,6 +10,8 @@ import {AUTH} from '../../constants/actionTypes'
 const Auth = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [isSignUp, setIsSignUp] = useState(true)
   const [data, setData] = useState({})
 
@@ -34,7 +37,8 @@ const Auth = () => {
     const result = jwtDecode(await res?.credential)
     const token = res?.credential
     try {
-      dispatch({type: AUTH, data: {result, token}})
+      dispatch({type: AUTH, payload: {result, token}})
+      navigate('/')
     } catch (error) {
       console.log(error)
     }
